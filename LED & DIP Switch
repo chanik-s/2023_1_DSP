@@ -1,0 +1,80 @@
+/*
+ * main.c
+ */
+#include "DSP2833x_Device.h"
+#include "DSP2833x_Examples.h"
+
+
+#define LED1_H	GpioDataRegs.GPASET.bit.GPIO25 = 1 //LED1
+#define LED1_L	GpioDataRegs.GPACLEAR.bit.GPIO25 = 1
+#define LED2_H	GpioDataRegs.GPASET.bit.GPIO24 = 1 //LED2
+#define LED2_L	GpioDataRegs.GPACLEAR.bit.GPIO24 = 1
+#define LED1_T	GpioDataRegs.GPATOGGLE.bit.GPIO25 = 1
+#define LED2_T	GpioDataRegs.GPATOGGLE.bit.GPIO24 = 1
+
+//dip 레지스터
+#define DIP1 GpioDataRegs.GPBDAT.bit.GPIO48
+#define DIP2 GpioDataRegs.GPBDAT.bit.GPIO49
+
+void Gpio_select(void);
+void delay(unsigned char i);
+void delay2(unsigned char i);
+void main(){
+
+	InitSysCtrl();
+
+	DINT;
+
+	Gpio_select();
+
+	LED1_L; // 25
+	LED2_L; //24
+
+
+	for(;;){
+		if(DIP1&&DIP2){
+			//LED1,2 on
+			LED1_H;
+			LED2_H;
+		}
+		else if(DIP1&&(!DIP2)){
+			//LED1 toggle
+			LED1_T;
+			LED2_L;
+		}
+		else if((!DIP1)&&DIP2){
+			//LED2 toggle
+			LED2_T;
+			LED1_L;
+		}
+		else { //DIP1,2 off
+			LED1_L;
+			LED2_L;
+		}
+
+		DELAY_US(100000);
+		}
+}
+
+
+void Gpio_select(void)
+{
+	EALLOW;
+	GpioCtrlRegs.GPBPUD.bit.GPIO48=0;
+	GpioCtrlRegs.GPBPUD.bit.GPIO49=0;
+	//
+
+	//
+	GpioCtrlRegs.GPAMUX2.all = 0;
+	//
+	GpioCtrlRegs.GPBMUX2.all=0;
+	//
+	GpioCtrlRegs.GPADIR.bit.GPIO25 = 1;
+	GpioCtrlRegs.GPADIR.bit.GPIO24 = 1;
+	//
+	GpioCtrlRegs.GPBDIR.bit.GPIO48=0; //입출력 포트 입력 으로 선언
+	GpioCtrlRegs.GPBDIR.bit.GPIO49=0;
+	//
+    EDIS;
+
+}
