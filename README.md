@@ -20,5 +20,5 @@
 장비
 HBE-DSPlab II
 프로그램
-TMS320F28335 칩 사용을 위한 개발 툴은 DSP 디바이스를 공급하고 있는 
 TI사의 Code Composer Studio 
+TMS320F28335 칩 
