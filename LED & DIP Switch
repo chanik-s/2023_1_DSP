@@ -5,11 +5,11 @@
 #include "DSP2833x_Examples.h"
 
 
-#define LED1_H	GpioDataRegs.GPASET.bit.GPIO25 = 1 //LED1
-#define LED1_L	GpioDataRegs.GPACLEAR.bit.GPIO25 = 1
+#define LED1_H	GpioDataRegs.GPASET.bit.GPIO25 = 1 //LED1 GPxSET 레지스터에 '1'을 써 넣으면 출력 값을 '1'(High)로 설정
+#define LED1_L	GpioDataRegs.GPACLEAR.bit.GPIO25 = 1 //GPxCLEAR 레지스터에 ‘1’을 써 넣으면 출력 값을 ‘0’(Low)으로 설정
 #define LED2_H	GpioDataRegs.GPASET.bit.GPIO24 = 1 //LED2
 #define LED2_L	GpioDataRegs.GPACLEAR.bit.GPIO24 = 1
-#define LED1_T	GpioDataRegs.GPATOGGLE.bit.GPIO25 = 1
+#define LED1_T	GpioDataRegs.GPATOGGLE.bit.GPIO25 = 1 //GPxTOGGLE 레지스터를 사용하면 GPIO 핀의 출력 상태를 반전시킬 수 있
 #define LED2_T	GpioDataRegs.GPATOGGLE.bit.GPIO24 = 1
 
 //dip 레지스터
